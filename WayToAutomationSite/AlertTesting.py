@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from time import gmtime, strftime
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
 import unittest
 
 
@@ -17,7 +20,8 @@ class RegisterNewUser(unittest.TestCase):
         driver.find_element_by_link_text("Alert").click()
         for handle in driver.window_handles:
             driver.switch_to.window(handle)
-        driver.find_element_by_link_text("Signin").click()
+        WebDriverWait(driver, 10).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "Signin"))).click()
+        # driver.find_element_by_link_text("Signin").click()
         user_names = driver.find_elements_by_name("username")
         user_names[1].send_keys("test")
         passwords = driver.find_elements_by_name("password")
